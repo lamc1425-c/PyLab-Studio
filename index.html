@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <meta name="theme-color" content="#1f1f1f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PyLab Studio" />
+    <meta
+      name="description"
+      content="Python IDE with files, projects, terminal and Jupyter Notebook powered by Pyodide."
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <title>PyLab Studio</title>
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="PyLab Studio">
+          <span class="brand-mark">Py</span>
+          <span class="brand-name">PyLab Studio</span>
+        </div>
+
+        <nav class="toolbar" aria-label="Editor tools">
+          <button id="run-btn" class="icon-button primary" type="button" title="Run (F5)" aria-label="Run code">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          </button>
+          <button id="stop-btn" class="icon-button danger" type="button" title="Stop" aria-label="Stop execution" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z" /></svg>
+          </button>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+
+          <button id="new-btn" class="icon-button" type="button" title="New Python file" aria-label="Create a new Python file">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm1 2.5L17.5 7H15zM13 11v3h3v2h-3v3h-2v-3H8v-2h3v-3z" /></svg>
+          </button>
+          <button id="save-btn" class="icon-button" type="button" title="Save (Ctrl+S)" aria-label="Save current file">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7zm-5 16a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm3-10H6V5h9z" /></svg>
+          </button>
+          <button id="comment-btn" class="icon-button" type="button" title="Comment or uncomment selection (Ctrl+/)" aria-label="Comment or uncomment selected lines">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6zM13.7 3 9 21h2.3L16 3z" /></svg>
+          </button>
+          <button id="tab-indent-btn" class="icon-button tab-indent-button" type="button" title="TAB: add one 4-space indentation level" aria-label="TAB: add one 4-space indentation level">
+            <span class="tab-indent-label" aria-hidden="true">TAB</span>
+          </button>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+
+          <button id="editor-font-down" class="icon-button" type="button" title="Decrease editor font size" aria-label="Decrease editor font size">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v2H5z" /></svg>
+          </button>
+          <button id="editor-font-up" class="icon-button" type="button" title="Increase editor font size" aria-label="Increase editor font size">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z" /></svg>
+          </button>
+          <button id="theme-btn" class="icon-button" type="button" title="Change theme" aria-label="Change editor theme">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18h1.5a2.5 2.5 0 0 0 0-5H12a1 1 0 0 1 0-2h3.8A5.2 5.2 0 0 0 21 8.8C21 5.6 17 3 12 3zm-4.8 8.2a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zm2-4a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0zm5.1.2a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0z" /></svg>
+          </button>
+          <button id="language-btn" class="icon-button language-button" type="button" title="Language" aria-label="Change interface language">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15.8 15.8 0 0 0-1.4-3.2A8.1 8.1 0 0 1 18.9 8zM12 4c.9 1.1 1.6 2.4 2 4h-4c.4-1.6 1.1-2.9 2-4zM4.3 14a8 8 0 0 1 0-4h3.3a16.6 16.6 0 0 0 0 4zm.8 2h3a15.8 15.8 0 0 0 1.4 3.2A8.1 8.1 0 0 1 5.1 16zM8.1 8h-3a8.1 8.1 0 0 1 4.4-3.2A15.8 15.8 0 0 0 8.1 8zM12 20c-.9-1.1-1.6-2.4-2-4h4c-.4 1.6-1.1 2.9-2 4zm2.4-6H9.6a14.7 14.7 0 0 1 0-4h4.8a14.7 14.7 0 0 1 0 4zm.1 5.2a15.8 15.8 0 0 0 1.4-3.2h3a8.1 8.1 0 0 1-4.4 3.2zM16.4 14a16.6 16.6 0 0 0 0-4h3.3a8 8 0 0 1 0 4z" /></svg>
+          </button>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+
+          <button
+            id="files-menu-btn"
+            class="icon-button"
+            type="button"
+            title="Files"
+            aria-label="Open file menu"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            aria-controls="files-menu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8zm10 14H4l3.4-7h15z" /></svg>
+          </button>
+          <button id="reset-session-btn" class="icon-button" type="button" title="Restart Python session" aria-label="Restart variables in the active Python session">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 1 0 20 12h-2a6 6 0 1 1-1.8-4.3L13 11h8V3z" /></svg>
+          </button>
+        </nav>
+
+        <div id="engine-status" class="engine-status" role="status" aria-live="polite">
+          <span class="status-dot"></span>
+          <span class="status-text">Python not loaded</span>
+        </div>
+      </header>
+
+      <section class="tabs-row" aria-label="Open files">
+        <div id="tabs" class="tabs" role="tablist"></div>
+      </section>
+
+      <main class="workspace">
+        <section class="editor-panel" aria-label="Python code editor">
+          <div id="editor" class="editor-host"></div>
+          <div id="notebook" class="notebook-host" aria-label="Jupyter Notebook" hidden>
+            <div id="notebook-cells" class="notebook-cells"></div>
+            <div class="notebook-add-row">
+              <button id="notebook-add-cell" class="notebook-add-cell" type="button">+ Code cell</button>
+            </div>
+          </div>
+        </section>
+
+        <div
+          id="workspace-resizer"
+          class="workspace-resizer"
+          role="separator"
+          aria-label="Resize terminal"
+          aria-orientation="horizontal"
+          aria-valuemin="20"
+          aria-valuemax="75"
+          aria-valuenow="31"
+          tabindex="0"
+        ><span aria-hidden="true"></span></div>
+
+        <section id="terminal-panel" class="terminal-panel" aria-label="Terminal">
+          <header class="terminal-header">
+            <div class="terminal-title">
+              <span>Terminal</span>
+              <span id="terminal-state" class="terminal-state">Ready</span>
+            </div>
+            <div class="terminal-actions">
+              <button id="terminal-font-down" class="icon-button compact" type="button" title="Decrease terminal font size" aria-label="Decrease terminal font size">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v2H5z" /></svg>
+              </button>
+              <button id="terminal-font-up" class="icon-button compact" type="button" title="Increase terminal font size" aria-label="Increase terminal font size">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z" /></svg>
+              </button>
+              <button id="copy-terminal" class="icon-button compact" type="button" title="Copy entire terminal" aria-label="Copy entire terminal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm0 2v11h11V9zM5 2h10a2 2 0 0 1 2 2v1h-2V4H5v10h1v2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" /></svg>
+              </button>
+              <button id="clear-terminal" class="icon-button compact" type="button" title="Clear terminal" aria-label="Clear terminal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7zm3-4h6l1 2h4v2H4V5h4z" /></svg>
+              </button>
+              <button id="toggle-terminal" class="icon-button compact" type="button" title="Hide terminal" aria-label="Hide terminal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5z" /></svg>
+              </button>
+            </div>
+          </header>
+          <pre id="terminal-output" class="terminal-output" tabindex="0" aria-live="polite" data-empty-message="Less bugs, more code."></pre>
+          <form id="terminal-input-form" class="terminal-input-row" hidden>
+            <span class="terminal-input-prefix" aria-hidden="true">›</span>
+            <label class="visually-hidden" for="terminal-input">Input for Python</label>
+            <input
+              id="terminal-input"
+              class="terminal-input"
+              type="text"
+              inputmode="text"
+              enterkeyhint="send"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              aria-label="Type the response for Python input"
+              placeholder="Type a response…"
+            />
+            <button
+              id="terminal-input-submit"
+              class="terminal-input-submit"
+              type="submit"
+              title="Send input"
+              aria-label="Send input to Python"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20.4 21.9 12 3 3.6v6.5l13.5 1.9L3 13.9z" /></svg>
+            </button>
+          </form>
+        </section>
+      </main>
+
+      <input id="file-input" type="file" accept=".py,.txt,.ipynb,text/x-python,text/plain,application/x-ipynb+json,application/json" hidden />
+      <input id="directory-input" type="file" webkitdirectory directory multiple hidden />
+    </div>
+
+    <div id="files-menu" class="files-menu" role="menu" aria-label="File actions" hidden>
+      <button id="files-new-notebook" class="files-menu-item" type="button" role="menuitem">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm2 4v2h8V7zm0 4v2h8v-2zm0 4v2h5v-2zM20 8h2v3h2v2h-2v3h-2v-3h-2v-2h2z" /></svg>
+        <span>New Notebook</span>
+        <kbd>Ctrl+Shift+N</kbd>
+      </button>
+      <button id="files-open" class="files-menu-item" type="button" role="menuitem">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8zm10 14H4l3.4-7h15z" /></svg>
+        <span>Open file…</span>
+        <kbd>Ctrl+O</kbd>
+      </button>
+      <button id="files-open-project" class="files-menu-item" type="button" role="menuitem">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8zm10 14H4l3.4-7h15zM8 8h10v2H8z" /></svg>
+        <span>Open folder / project…</span>
+      </button>
+      <button id="files-explore-project" class="files-menu-item" type="button" role="menuitem" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7l2 2h9v14H3zm2 4v10h14V8zM7 10h10v2H7zm0 4h7v2H7z" /></svg>
+        <span>Explore project</span>
+      </button>
+      <button id="files-save-as" class="files-menu-item" type="button" role="menuitem">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8v-2H5V5h10v5h2V7zm-5 2v4H7V5zm8.7 8.3-1.4-1.4L13.2 18l-1.2 4 4-1.2z" /></svg>
+        <span>Save as…</span>
+        <kbd>Ctrl+Shift+S</kbd>
+      </button>
+    </div>
+
+    <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title">
+      <div class="project-dialog-header">
+        <div class="project-dialog-heading">
+          <h2 id="project-dialog-title">Project</h2>
+          <p id="project-dialog-subtitle">Open a folder and choose which file to edit.</p>
+        </div>
+        <button id="project-close" class="icon-button compact" type="button" title="Close" aria-label="Close project explorer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4z" /></svg>
+        </button>
+      </div>
+      <div id="project-tree" class="project-tree" role="tree" aria-label="Project files"></div>
+      <p id="project-empty" class="project-empty" hidden>There are no supported files in this folder.</p>
+    </dialog>
+
+    <dialog id="close-document-dialog" class="confirm-dialog" aria-labelledby="close-document-title">
+      <div class="confirm-dialog-body">
+        <h2 id="close-document-title">Unsaved changes</h2>
+        <p><span id="close-document-before">“</span><strong id="close-document-name"></strong><span id="close-document-after">” has changes that have not been saved outside PyLab Studio.</span></p>
+        <div class="confirm-dialog-actions">
+          <button id="close-document-cancel" class="dialog-button secondary" type="button">Cancel</button>
+          <button id="close-document-confirm" class="dialog-button danger" type="button">Close without saving</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="theme-dialog" class="theme-dialog" aria-labelledby="theme-dialog-title">
+      <div class="theme-dialog-header">
+        <div>
+          <h2 id="theme-dialog-title">Editor theme</h2>
+          <p>Choose a palette. Your code and editor size stay unchanged.</p>
+        </div>
+        <button id="theme-close" class="icon-button compact" type="button" title="Close" aria-label="Close theme selector">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4z" /></svg>
+        </button>
+      </div>
+      <div id="theme-grid" class="theme-grid" role="group" aria-label="Available themes"></div>
+    </dialog>
+
+    <dialog id="language-dialog" class="theme-dialog language-dialog" aria-labelledby="language-dialog-title">
+      <div class="theme-dialog-header">
+        <div>
+          <h2 id="language-dialog-title">Interface language</h2>
+          <p id="language-dialog-subtitle">Choose the language used by PyLab Studio.</p>
+        </div>
+        <button id="language-close" class="icon-button compact" type="button" title="Close" aria-label="Close language selector">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4z" /></svg>
+        </button>
+      </div>
+      <div id="language-options" class="language-options" role="group" aria-label="Available languages"></div>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "pylab-studio",
+  "private": true,
+  "version": "0.6.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "lint": "node scripts/lint.mjs",
+    "test:mobile": "node scripts/mobile-regression.mjs",
+    "test:runtime": "node scripts/test-runtime.mjs",
+    "test": "npm run lint && npm run test:mobile && npm run test:ui && npm run test:notebook && npm run test:i18n && npm run test:runtime",
+    "test:ui": "node scripts/ui-regression.mjs",
+    "test:notebook": "node scripts/notebook-regression.mjs",
+    "test:i18n": "node scripts/i18n-regression.mjs"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "6.20.3",
+    "@codemirror/commands": "6.10.4",
+    "@codemirror/lang-python": "6.2.1",
+    "@codemirror/language": "6.12.4",
+    "@codemirror/state": "6.7.1",
+    "@codemirror/view": "6.43.6",
+    "@lezer/highlight": "1.2.3",
+    "codemirror": "6.0.2"
+  },
+  "devDependencies": {
+    "vite": "8.1.5"
+  }
+}
